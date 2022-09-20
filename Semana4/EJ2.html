@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Documento</title>
+</head>
+<body>
+    <h1>Primer grafico con d3</h1>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>  
+    <script>
+        let dataset = [50, 23, 93];
+        let clases = ["Clase1","Clase2","Clase3"];
+        let color = ['red','green','blue']
+        // svg ancho del área de dibujo
+        let width = 250; 
+        // altura del área de dibujo svg
+        let height = 150; 
+        // selecciona cuerpo
+        let svg = d3.select('body')
+          // agregar svg
+          .append('svg')
+          // Establecer la propiedad de ancho de svg
+          .attr('width', width)
+          // Establecer la propiedad de altura de svg
+          .attr('height', height);
+        // define los márgenes superior, inferior, izquierdo y derecho
+        let padding = {
+          top: 20,
+          right: 20,
+          bottom: 20,
+          left: 20
+        }
+
+        // El ancho del rectángulo (incluido el espacio), en píxeles
+        let rectStep = 45;
+        // El ancho del rectángulo (excluyendo el espacio), en píxeles
+        let rectWidth = 35;
+        // selecciona todo rect
+        let rect = svg.selectAll('rect')
+          // enlazar datos
+          .data(dataset)
+          // Obtenga la parte enter
+          .enter()
+          // Agrega un elemento rect para que sea consistente con la longitud de los datos enlazados
+          .append('rect')
+          .attr('fill', function(d,i){
+            return color[i]
+          })
+          // Establece la coordenada x del rectángulo
+          .attr('x', function (d, i) {
+            // posición de relleno izquierdo de svg de cada rectángulo
+            return padding.left + i * rectStep
+          })
+          // Establece la coordenada y del rectángulo
+          .attr('y', function (d) {
+            return height - padding.bottom - d;
+          })
+          // Establecer el ancho del rectángulo
+          .attr('width', rectWidth)
+          // Establecer la altura del rectángulo
+          .attr('height', function (d) {
+            return d;
+          });
+          // A continuación, agregue texto de etiqueta para el rectángulo. El método es el mismo que agregar rect. Primero, selectall () se usa para seleccionar un conjunto vacío, y luego agrega una cantidad suficiente de elementos de texto al conjunto selector.
+        let text = svg.selectAll('text')
+            // enlazar datos
+          .data(dataset)
+            // Obtenga la parte enter
+          .enter()
+            // Agregar un elemento de texto con la misma longitud que la matriz enlazada
+          .append('text')
+            // Establecer color de relleno de texto
+          .attr('fill', 'black')
+            // Establecer el tamaño de fuente
+          .attr('font-size', '14px')
+            // Establecer el texto en el medio del rectángulo más tarde 
+          .attr('text-anchor', 'middle')
+            // Establece x para que sea igual que el rectángulo
+          .attr('x', function (d, i) {
+            return padding.left + i * rectStep;
+          })
+            // establece y para que sea el mismo que el rectángulo
+          .attr('y', function (d) {
+            return height - padding.bottom -d;
+          })
+          .attr('dx', rectWidth / 2)
+          .attr('dy', '1em')
+            // texto de salida
+          .text(function (d) {
+              return d;
+            });
+
+        let text2 = svg.selectAll('text2')
+            // enlazar datos
+          .data(clases)
+            // Obtenga la parte enter
+          .enter()
+            // Agregar un elemento de texto con la misma longitud que la matriz enlazada
+          .append('text')
+            // Establecer color de relleno de texto
+            .attr('fill', function(d,i){
+            return color[i]
+          })
+            // Establecer el tamaño de fuente
+          .attr('font-size', '14px')
+            // Establecer el texto en el medio del rectángulo más tarde 
+          .attr('text-anchor', 'middle')
+            // Establece x para que sea igual que el rectángulo
+          .attr('x', function (d, i) {
+            return padding.left + i * rectStep+18;
+          })
+            // establece y para que sea el mismo que el rectángulo
+          .attr('y', function (d) {
+            return height - padding.bottom+20;
+          })
+            // texto de salida
+          .text(function (d,i) {
+            return clases[i];
+          });
+
+        let line = svg.selectAll('line')
+          .enter()
+          .append('line')          // attach a line
+          .style("stroke", "black")  // colour the line
+          .attr("x1", 100)     // x position of the first end of the line
+          .attr("y1", 50)      // y position of the first end of the line
+          .attr("x2", 300)     // x position of the second end of the line
+          .attr("y2", 50);    // y position of the second end of the line
+    </script>
+</body>
+</html>

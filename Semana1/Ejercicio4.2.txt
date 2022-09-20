@@ -1,0 +1,7 @@
+Ejercicio 4
+
+-En enviar revisado llama a un metodo programado en JavaScrip, este código lo que hace es comprobar que no es un
+invitado, y comprueba con la clave de ejemplo si es igual a 0
+
+-Ese fichero será almacenado en JavaScrip que se encargara de comprobar que todo este correcto, antes de enviarlo
+al servidor

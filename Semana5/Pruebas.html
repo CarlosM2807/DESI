@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Documento</title>
+</head>
+<body>
+    <h1>Primer grafico con d3</h1>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>  
+    <script>
+        var escalaLineal = d3.scaleLinear([20, 89], [0, 350]);
+        console.log("Salida para 20: " + escalaLineal(20));
+        console.log("Salida para 65: " + escalaLineal(65));
+        // Prueba rangeRound
+        escalaLineal.rangeRound([0, 350]);
+        console.log("Salida para 65 round: " + escalaLineal(65));
+        // Prueba clamp con un dato fuera de dominio
+        console.log("Fuera dominio: " + escalaLineal(10));
+        escalaLineal.clamp(true);
+        console.log("Fuera dominio clamp: " + escalaLineal(10));
+       
+</script>
+</body>
+</html>

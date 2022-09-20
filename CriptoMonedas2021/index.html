@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <TITLE>Proyecto Final DESI 21-22</TITLE>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v6.min.js"></script>
+  <script src="ProyectoFinal.js"></script> 
+  <link rel="stylesheet" href="ProyectoFinalEstilo.css" />
+</head>
+<body>
+    <div id="div1">
+        <div id='Anos'>
+            <h2>TRIMESTRE</h2>
+
+            <!-- CREACION DEL SELECTBOX PARA LA ELECCION DE LOS TRIMESTRES -->
+
+            <select class="elige-ano" id="elegirTiempo" style="width:240px" style="height: 550px;">
+                <option name="tiempo" value="primertrimestre2019.csv" selected>Enero a Marzo de 2019</option>
+                <option name="tiempo" value="segundotrimestre2019.csv">Abril a Junio de 2019</option>
+                <option name="tiempo" value="tercertrimestre2019.csv">Julio a Septiembre de 2019</option>
+                <option name="tiempo" value="cuartotrimestre2019.csv">Octubre a Diciembre de 2019</option>
+                <option name="tiempo" value="primertrimestre2020.csv">Enero a Marzo de 2020</option>
+                <option name="tiempo" value="segundotrimestre2020.csv">Abril a Junio de 2020</option>
+                <option name="tiempo" value="tercertrimestre2020.csv">Julio a Septiembre de 2020</option>
+                <option name="tiempo" value="cuartotrimestre2020.csv">Octubre a Diciembre de 2020</option>
+                <option name="tiempo" value="primertrimestre2021.csv">Enero a Marzo de 2021</option>
+                <option name="tiempo" value="segundotrimestre2021.csv">Abril a Junio de 2021</option>
+            </select>     
+        </div> 
+        <div id='CriptosEleccion'>
+            <table>
+                <tr>
+                <td>
+                    <ul>
+                        <h2>CRIPTOMONEDAS</h2>   
+
+                        <!-- CREACION DEL LA TABLA DE CHECKBOXS PARA LA SELECCION DE LAS CRIPTOMONEDAS -->
+
+                        <h4 style="color: orange; font-size: 17px; font-family: Georgia, 'Times New Roman', Times, serif;"><input name="elegir" class="esCheckBox" id="BinanceCoin" type="checkbox"checked/>BinanceCoin</h4>                
+                        <h4 style="color: #3B83BD; font-size: 17px; font-family: Georgia, 'Times New Roman', Times, serif;"><input name="elegir" class="esCheckBox" id="Litecoin" type="checkbox"checked/>Litecoin</h4>
+                        <h4 style="color: #332F2C; font-size: 17px; font-family: Georgia, 'Times New Roman', Times, serif;"><input name="elegir" class="esCheckBox" id="Ethereum" type="checkbox" checked/>Ethereum</h4>
+                        <h4 style="color: red; font-size: 17px; font-family: Georgia, 'Times New Roman', Times, serif;"></h4style><input name="elegir" class="esCheckBox" id="Monero" type="checkbox"checked/>Monero</h4>
+                        <h4 style="color: green; font-size: 17px; font-family: Georgia, 'Times New Roman', Times, serif;"><input name="elegir0" class="esCheckBox" id="All" type="checkbox" onclick='funcionAll(this);' checked/>All</h4>
+                    </ul>
+                </td>
+                </tr>
+            </table>
+        </div>
+
+        
+        <script  type="text/javascript">
+            
+             function funcionAll(source){
+                    checkboxes = document.getElementsByName('elegir');
+                    console.log(checkboxes);
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        checkboxes[i].checked = source.checked;
+                    }
+            }
+
+            document.addEventListener("DOMContentLoaded", function (e) {
+                let archivo = "primertrimestre2019.csv";
+                var criptos = [true,true,true,true];
+                //var selectbox = d3.selectAll("option");
+                var checkbox = d3.selectAll('input');
+                draw_multiseries(1100, 580, archivo,criptos);
+                var ethereum = document.getElementById('Ethereum');
+                var litecoin = document.getElementById('Litecoin');
+                var binance = document.getElementById('BinanceCoin');
+                var monero = document.getElementById('Monero');
+                var all = document.getElementById('All');
+                actualizaCriptos(criptos);
+
+                // DETECTA CAMBIO EN EL CHECKBOX
+
+                checkbox.on("change", function(){
+                    console.log("detecta cambio")
+                    actualizaCriptos(criptos);
+                    d3.selectAll("svg").remove();
+                    draw_multiseries(1100, 580, archivo,criptos);
+                })
+
+                // FUNCIONAMIENTO DEL CHECKBOX
+
+                function actualizaCriptos(criptos){
+                    ethereum.addEventListener('change',function(){
+                        if(ethereum.checked == true){
+                            criptos[0] = true;
+                            console.log(criptos);
+                        }else{
+                            criptos[0] = false;
+                            console.log(criptos);
+                        }
+                    })
+
+                    litecoin.addEventListener('change',function(){
+                        if(litecoin.checked == true){
+                            criptos[1] = true;
+                            console.log(criptos)
+                        }else{
+                            criptos[1] = false;
+                            console.log(criptos)
+                        }
+                    })
+
+                    binance.addEventListener('change',function(){
+                        if(binance.checked == true){
+                            criptos[2] = true;
+                            console.log(criptos)
+                        }else{
+                            criptos[2] = false;
+                            console.log(criptos)
+                        }
+                    })
+
+                    monero.addEventListener('change',function(){
+                        if(monero.checked == true){
+                            criptos[3] = true;
+                            console.log(criptos)
+                        }else{
+                            criptos[3] = false;
+                            console.log(criptos)
+                        }
+                    })
+
+                    all.addEventListener('change', function(){
+                        if(all.checked == true){
+                            criptos[0] = true;
+                            criptos[1] = true;
+                            criptos[2] = true;
+                            criptos[3] = true;
+                        }else{
+                            criptos[0] = false;
+                            criptos[1] = false;
+                            criptos[2] = false;
+                            criptos[3] = false;
+                        }
+                    })
+                }
+                
+                // DETECTA CAMBIOS EN EL SELECTBOX Y ACTUALIZA EL GRAFICO
+
+                document.getElementById('elegirTiempo').addEventListener('change', function() {
+                    d3.selectAll("svg").remove();
+                    actualizaCriptos(criptos);
+                    archivo = this.value;
+                    draw_multiseries(1100, 580, archivo,criptos); // Pintamos el grafico entero inicialmente, la variable series vale 6, luego se pintan todas las series
+                });
+            });
+        </script>
+    </div>
+</body>

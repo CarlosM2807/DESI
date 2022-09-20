@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <TITLE>Series selections with controls</TITLE>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v6.min.js"></script>
+  <script src="ch10_01_multiseries.js"></script> <!-- Contiene el codigo del grafico de lineas -->
+  <link rel="stylesheet" href="ch10_01_multiseries.css" /> <!-- Contiene el estilo del grafico -->
+  <style>
+    li {
+      font-family: "Verdana";
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 1px 2px 2px #555555;
+      margin: 3px;
+      list-style: none;
+    }
+  </style>
+
+  <script type="text/javascript">
+    console.log("usando D3 para acceder y modificar el elemento input del html");
+    document.addEventListener("DOMContentLoaded", function (e) {  // La funci�n se ejecute cuando el documento este listo
+      var series = 3;
+      d3.select("#myChart").selectAll("svg").remove();  // Por si acaso, borramos el elemento svg que esta en la etiqueta div con identificador "myChart"
+      draw_multiseries("#myChart", 400, 400, series);  // Pintamos el grafico entero inicialmente, la variable series vale 3, luego se pintan todas las series
+      var selec = d3.selectAll("input[type=radio][name=dataSeries]"); // Seleccionamos todos los elementos que contengan lo entrecomillado
+      selec.attr("checked", false); // Ponemos todos los elementos del radio buttom a false
+      //console.log(selec); // Array de objetos
+      //console.log(selec[0]); // array de objetos que contienen la descripcion de cada elemento html de la seleccion
+      //console.log(selec[0][0]); // accedemos al objeto que contiene la descripcion del primer elemento imput
+      //console.log(selec[0][0].value); // valor del primer input                                                          
+      selec.each(function (d, i) { // para poner "checked" el elemento input con valor=3
+        //console.log(this); 
+        if (this.value == 3) {
+          this["checked"] = true; // cambiamos ese elemento del objeto. En este caso para que "All" este seleccionado
+          // Tambien se podria haber puesto this.value = true
+        }
+      });
+      // PARTE CON CAMBIOS EN V6
+      selec.on("change", function (event) {   // Se le llama al cambiar cualquier elemento input de la seleccion
+        // console.log(event.target.value); // Contiene el valor del evento de tipo "change"
+        d3.select("#myChart").selectAll("svg").remove();
+        draw_multiseries("#myChart", 400, 400, event.target.value);
+      });
+    });
+  </script>
+
+</head>
+
+<body>
+  <!-- *Linea erronea <script type="text/javascript"> -->
+  <div id="myChart"></div> <!-- *Te has comido esta linea que es fundamental. Por eso no te salia nada ...-->
+
+  <table>
+    <tr>
+      <td>
+        <div>
+          <ul>
+            <li><input name="dataSeries" value="0" type="radio" checked />Europe</li>
+            <li><input name="dataSeries" value="1" type="radio" />Asia</li>
+            <li><input name="dataSeries" value="2" type="radio" />America</li>
+            <li><input name="dataSeries" value="3" type="radio" />All</li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+
+</html>

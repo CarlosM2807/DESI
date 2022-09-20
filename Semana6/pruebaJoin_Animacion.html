@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <TITLE>Series selections with controls</TITLE>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v6.min.js"></script>
+  <script src="pruebaJoin_Animacion.js"></script> <!-- Contiene el codigo del grafico de lineas -->
+</head>
+
+<body>
+  <div>
+  <button onclick="pruebaJoin()">prueba Join</button>
+</div>
+
+  <script type="text/javascript">
+    var width = 500;
+    var svg = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", 33)
+      .attr("viewBox", `0 -20 ${width} 33`);
+  </script>
+  
+
+</body>
+
+</html>

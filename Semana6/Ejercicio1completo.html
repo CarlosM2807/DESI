@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfica</title>
+    <script src="http://d3js.org/d3.v6.min.js"></script> 
+
+</head>
+
+<style>
+    body {
+     font: 14px sans-serif;
+    }
+    .axis path,
+    .axis line {
+     fill: none;
+     stroke: #000;
+     shape-rendering: crispEdges;
+    }
+    .grid .tick line {
+     stroke: lightgrey;
+     opacity: 0.7;
+    }
+    
+    .grid path {
+     stroke-width: 0;
+    }
+    .x.axis path {
+     display: none;
+     font: 14px sans-serif;
+    }
+
+    .axis{
+        font: 14px sans-serif;
+    }
+    </style>
+<body>
+    
+    <script type="text/javascript">
+        var margin = {top: 70, right: 20, bottom: 30, left: 40},
+        w = 500 - margin.left - margin.right,
+         h = 350 - margin.top - margin.bottom;
+        var color = d3.scaleOrdinal(d3.schemeCategory10)
+
+        var x = d3.scaleBand().rangeRound([0, w]).padding(.1)
+        var y = d3.scaleLinear()
+        .range([h, 0])
+
+        var formatPercent = d3.format(".0%");
+        var xAxis = d3.axisBottom(x)
+        .scale(x)
+        var yAxis = d3.axisLeft(y)
+         .scale(y)
+         .ticks(5)
+         .tickFormat(formatPercent);
+
+         var yGrid = d3.axisLeft(y)
+            .scale(y)
+            .ticks(5)
+            .tickSize(-w, 0, 0)
+            .tickFormat("");
+
+         var svg = d3.select("body").append("svg")
+        .attr("width", w + margin.left + margin.right)
+        .attr("height", h + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+
+        d3.csv("data_04.csv").then(function(data) {
+         var sum = 0;
+            data.forEach(function(d) {
+                d.income = +d.income;
+                sum += d.income;
+            });
+            x.domain(data.map(function(d) { return d.country; }));
+            y.domain([0, d3.max(data, function(d) { return d.income/sum; })]);
+
+            svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0, " + h + ")")
+            .call(xAxis);
+             svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+            svg.append("g")
+            .attr("class", "grid")
+            .call(yGrid);
+
+
+            var labels = svg.append("g")
+            .attr("class", "labels");
+            labels.append("text")
+            .attr("transform", "rotate(–90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "start")
+            .text("Income [%]");
+            var title = svg.append("g")
+            .attr("class", "title");
+            title.append("text")
+            .attr("x", (w / 2))
+            .attr("y", -30 )
+            .attr("text-anchor", "middle")
+            .style("font-size", "22px")
+            .text("My first bar chart");
+
+
+            svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.country); })
+            .attr("width", x.bandwidth())
+            .attr("y", function(d) { return y(d.income/sum); })
+            .attr("height", function(d) { return h - y(d.income/sum); })
+            .attr("fill", "grey")
+            .on("mouseover", mouseOn)
+            .on("mouseout", mouseOut);
+
+            function mouseOn(event) {  // Add interactivity
+                //console.log(event);
+                
+
+            // Use D3 to select element, change color and size
+            d3.select(this)
+            .attr("fill","red")
+            // Specify where to put label of text
+            svg.append("text")
+            .attr("id","t") // Create an id for text so we can select it later for removing on mouseout
+            .attr("x", parseInt(event.originalTarget.attributes.x.nodeValue) + 30)
+            
+            .attr("y", 230)
+            .text(function() {
+                return event.originalTarget._data_.income;  // Value of the text
+            });
+        }
+        function mouseOut(event) {
+            // Use D3 to select element, change color back to normal
+            d3.select(this)
+               .attr("fill","grey")
+               
+
+            // Select text by id and then remove
+            d3.select("#t").remove();  // Remove text location
+          }
+        });
+
+        
+
+
+
+        
+        </script>
+</body>
+</html>

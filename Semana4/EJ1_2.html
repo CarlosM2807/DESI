@@ -1,0 +1,17 @@
+<HTML>
+    <HEAD>
+    <TITLE>Ejemplo DOM</TITLE>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    </HEAD>
+    <BODY>
+    <h1>Ejercicio CSV</h1>
+    <script>
+        d3.csv("datosCSV.csv").then(function(data) {
+            for(i=0;i<data.length;i++){
+                console.log(data[i].Fruta +" " + data[i].Precio);
+            }
+            });
+        </script>    
+</BODY>
+</HTML>
+  

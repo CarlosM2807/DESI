@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Documento</title>
+</head>
+<body>
+    <h1>Primer grafico con d3</h1>
+    <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>  
+    <script>
+         var datos = [5,10,15,20,25];
+            var w = 336; // Ancho del gráfico
+            var h = 260; // Alto del gráfico
+            var margin_x = 32;
+            var margin_y = 20;
+            var x = d3.scaleLinear().domain([0, datos.length]).range([0,w]); // Ajuste eje X
+            var y = d3.scaleLinear().domain([0, d3.max(datos)]).range([h,0]); // Ajuste eje Y
+            var xAxis = d3.axisBottom(x).ticks(5); // Defino la función eje X
+            var yAxis = d3.axisLeft(y).ticks(5); // Defino la función eje Y
+            var svg = d3.select("body").append("svg").attr("width", w + margin_x + margin_x) // Elementos svg
+            .attr("height", h + margin_y + margin_y).append("g")
+            .attr("transform", "translate(" + margin_x + "," + margin_y + ")");
+            svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + h + ")").call(xAxis); // Eje X
+            svg.append("g").attr("class", "y axis").call(yAxis); // Eje Y
+</script>
+</body>
+</html>

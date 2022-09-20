@@ -1,0 +1,27 @@
+h1{
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}
+
+h2{
+    font-weight: lighter;
+    text-align: left;
+    color: blue;
+}
+
+h3{
+    font-weight: 900;
+    text-align: right;
+    color: tomato;
+}
+
+#tipo1{font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: indigo;font-size: 35;}
+#tipo2{font: oblique; font-weight: 500; color: mediumpurple;}
+
+body{
+    margin-left: 3cm ;
+    margin-right: 3cm;
+    margin-top: 5cm;
+    margin-bottom: 5cm;
+}

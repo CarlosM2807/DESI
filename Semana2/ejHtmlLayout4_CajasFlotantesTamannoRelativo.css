@@ -1,0 +1,33 @@
+html {
+       height: 100%;
+       width: 100%;
+       }
+
+body {
+       height: 100%;
+       width: 100%;
+       }
+
+#div1 {
+       height: 100%;
+       width: 100%;
+       border: 1px solid black;
+       }
+
+#div2 {
+       height:50%;
+       width:60%;
+       border: 1px solid black;
+       float:left;
+       }
+
+#div3 {
+       height: 20%;
+       width: 30%;
+       border: 1px solid black;
+       float: right;
+       }
+/*#img{
+       height: auto;
+       width: auto;
+       }*/

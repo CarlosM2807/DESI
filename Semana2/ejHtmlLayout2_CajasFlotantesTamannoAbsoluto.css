@@ -1,0 +1,22 @@
+#div1 {
+      height: 400px;
+      width: 800px;
+      border: 1px solid black;
+      }
+
+#div2 {
+       height: 250px;
+       width: 600px;
+       border: 1px solid black;
+       float: left;
+       }
+
+
+#div3 {
+       height: 100px;
+       width: 150px;
+       border: 1px solid black;
+       float: right;
+       margin: 15px;
+       margin-top: 150px;
+       }
